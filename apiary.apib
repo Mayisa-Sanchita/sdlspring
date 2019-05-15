@@ -1,80 +1,136 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://sdlspring.herokuapp.com/
 
 # sdlspring
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+It's a simple API allowing user to view information of students.
 
-## Questions Collection [/questions]
 
-### List All Questions [GET]
+### Allowed HTTPs requests:
+<pre>
+POST    : To create resource 
+PUT     : Update resource
+GET     : Get a resource or list of resources
+DELETE  : To delete resource
+</pre>
+
+### Description Of Usual Server Responses:
+- 200 `OK` - the request was successful (some API calls may return 201 instead).
+- 201 `Created` - the request was successful and a resource was created.
+- 204 `No Content` - the request was successful but there is no representation to return (i.e. the response is empty).
+- 400 `Bad Request` - the request could not be understood or was missing required parameters.
+- 404 `Not Found` - resource was not found.
+- 405 `Method Not Allowed` - requested method is not supported for resource.
+
+# Students
+Represents students details. 
+
+---
+**Students attributes:**
+
+- id `(Number)` : unique identifier. 
+- name `(String)` : Name of students.
+- session `(String)` : Session of students.
+- mobile `(String)` : Mobile no. of students.
+---
+
+## Students Collection [/students/]
+
+### Get All Students [GET]
 
 + Response 200 (application/json)
 
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
+                "_id": "5cdbca31820b90000492f2e9",
+                "name": "Mayisha",
+                "session": "2015-2016",
+                "mobile": "01723094563"
+            },
+            {
+                "_id": "5cdbca4c820b90000492f2ea",
+                "name": "Farha",
+                "session": "2015-2016",
+                "mobile": "01723094563"
+            },
+            {
+                "_id": "5cdbca5e820b90000492f2eb",
+                "name": "Muneem",
+                "session": "2015-2016",
+                "mobile": "01723054563"
             }
         ]
+        
+### Add a New Student Information [POST]
 
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+You may add new student data using this action. It takes a JSON object 
+containing (name, session, and mobile), and assigns it a new ObjectId.
+This object is then inserted into the students collection, and the new 
+Students object is returned.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+            "name": "Muneem",
+            "session": "2015-2016",
+            "mobile": "01723054563"
+        }    
 
 + Response 201 (application/json)
-
+    
     + Headers
-
-            Location: /questions/2
+            
+            Location: /students/id
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "name": "Muneem",
+                "session": "2015-2016",
+                "mobile": "01723054563"
             }
+        
+## Access students Informations by id : [/Students/{id}]
+
+---
+
+### Get a spacific students data [GET]
+
+
++ Parameters
+    + id (number) - ID of the Pet in the form of a string
+
++ Response 200 (application/json)
+        
+        {   
+            "_id": "5cdbca4c820b90000492f2ea",
+            "name": "Muneem",
+            "session": "2015-2016",
+            "mobile": "01723054563"
+        }
+
+            
+##Modify Students Information  [/pets/{id}]
+
++ Parameters
+    + id (number) - ID of the Pet in the form of a string
+    
+### Update Pets data [PUT/id]
+
+You may updates existing studentt infromation using this action.
+It takes a JSON object containing (name, session, and mobile).
+The id in the request URL is the _id of the document to be modified.
+
++ Request (application/json)
+
+        {
+            "name": "Muneem",
+            "session": "2015-2016",
+            "mobile": "01723054563"
+        } 
+
++ Response 200 (application/json)
+
+### Delete pets data [DELETE/id]
+                Thanks for using our app.
++ Response 204
